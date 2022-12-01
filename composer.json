@@ -1,0 +1,20 @@
+{
+  "name": "ali/persian-datepicker",
+  "description": "The Persian Datepicker component for Laravel Livewire",
+  "type": "component",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Ali\\PersianDatepicker\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "ali rahimi",
+      "email": "alirahimi818@gmail.com"
+    }
+  ],
+  "require": {
+    "livewire/livewire": ">=2.0"
+  }
+}
