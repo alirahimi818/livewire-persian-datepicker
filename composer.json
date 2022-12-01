@@ -1,5 +1,5 @@
 {
-  "name": "ali/persian-datepicker",
+  "name": "alirahimi/persian-datepicker",
   "description": "The Persian Datepicker component for Laravel Livewire",
   "type": "component",
   "license": "MIT",
@@ -15,6 +15,7 @@
     }
   ],
   "require": {
+    "php": "^8.0.2",
     "livewire/livewire": ">=2.0"
   }
 }
