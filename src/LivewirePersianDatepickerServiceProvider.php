@@ -1,10 +1,10 @@
 <?php
 
-namespace alirahimi818\PersianDatepicker;
+namespace Alirahimi\Livewire\Persian\Datepicker;
 
 use Illuminate\Support\ServiceProvider;
 
-class PersianDatepickerServiceProvider extends ServiceProvider
+class LivewirePersianDatepickerServiceProvider extends ServiceProvider
 {
 
     /**
