@@ -2,6 +2,7 @@
 
 namespace Alirahimi\Livewire\Persian\Datepicker;
 
+use Alirahimi\Livewire\Persian\Datepicker\app\Console\PublishComponent;
 use Illuminate\Support\ServiceProvider;
 
 class LivewirePersianDatepickerServiceProvider extends ServiceProvider
@@ -24,6 +25,10 @@ class LivewirePersianDatepickerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->commands([
+            PublishComponent::class,
+        ]);
+
         $this->publishes([
             __DIR__ . '/../resources/views/components/persian-datepicker.blade.php' => resource_path('views/components/persian-datepicker.blade.php'),
             __DIR__ . '/../resources/js/livewire-datepicker-datepicker.js' => resource_path('js/livewire-datepicker-datepicker.js'),
