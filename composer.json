@@ -14,13 +14,6 @@
       "email": "alirahimi818@gmail.com"
     }
   ],
-  "extra": {
-    "laravel": {
-      "providers": [
-        "AliRahimi\\LivewirePersianDatepicker\\LivewirePersianDatepickerServiceProvider"
-      ]
-    }
-  },
   "require": {
     "php": "^8.0.2",
     "livewire/livewire": ">=2.0"
