@@ -43,7 +43,7 @@ class PublishComponent extends Command
             '--tag' => 'livewire-persian-datepicker',
             '--force' => false]
         );
-        $this->info("Livewire Persian Datepicker Component published successful. \n path => resources/views/components/persian-datepicker.blade.php");
+        $this->info("Livewire Persian Datepicker Component published successful.\npath => resources/views/components/persian-datepicker.blade.php");
 
     }
 }
