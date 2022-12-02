@@ -35,6 +35,6 @@ class LivewirePersianDatepickerServiceProvider extends ServiceProvider
             PublishComponent::class,
         ]);
 
-        Artisan::call('lpd:persian-datepicker');
+        Artisan::call('livewire:persian-datepicker');
     }
 }

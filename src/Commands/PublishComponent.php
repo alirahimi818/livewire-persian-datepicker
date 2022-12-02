@@ -11,7 +11,7 @@ class PublishComponent extends Command
      *
      * @var string
      */
-    protected $signature = 'lpd:persian-datepicker';
+    protected $signature = 'livewire:persian-datepicker';
 
     /**
      * The console command description.
