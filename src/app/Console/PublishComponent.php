@@ -1,6 +1,6 @@
 <?php
 
-namespace Livewire\Persian\Datepicker\app\Console;
+namespace PersianDatepicker\app\Console;
 
 use Illuminate\Console\Command;
 

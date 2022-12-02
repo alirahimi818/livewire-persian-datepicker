@@ -18,7 +18,10 @@
     "laravel": {
       "providers": [
         "AliRahimi\\Livewire\\Persian\\Datepicker\\LivewirePersianDatepickerServiceProvider"
-      ]
+      ],
+      "aliases": {
+        "PersianDatepicker": "AliRahimi\\Livewire\\Persian\\Datepicker\\"
+      }
     }
   },
   "require": {

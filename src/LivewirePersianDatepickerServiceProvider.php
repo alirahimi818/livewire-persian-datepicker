@@ -3,7 +3,7 @@
 namespace Alirahimi\Livewire\Persian\Datepicker;
 
 use Illuminate\Support\ServiceProvider;
-use Livewire\Persian\Datepicker\app\Console\PublishComponent;
+use PersianDatepicker\app\Console\PublishComponent;
 
 class LivewirePersianDatepickerServiceProvider extends ServiceProvider
 {
