@@ -1,6 +1,6 @@
 <?php
 
-namespace AliRahimi\LivewirePersianDatepicker\app\Console;
+namespace AliRahimi\LivewirePersianDatepicker\Commands;
 
 use Illuminate\Console\Command;
 
@@ -28,7 +28,7 @@ class PublishComponent extends Command
      */
     public function handle()
     {
-        $this->call('vendor:publish', ['--tag' => 'livewire-persian-datepicker', '--force' => true]);
+        $this->call('vendor:publish', ['--tag' => 'livewire-persian-datepicker', '--force' => false]);
         $this->info("Livewire Persian Datepicker Component published successful. \n path => resources/views/components/persian-datepicker.blade.php");
 
     }

@@ -2,7 +2,7 @@
 
 namespace AliRahimi\LivewirePersianDatepicker;
 
-use AliRahimi\LivewirePersianDatepicker\app\Console\PublishComponent;
+use AliRahimi\LivewirePersianDatepicker\Commands\PublishComponent;
 use Illuminate\Support\ServiceProvider;
 
 class LivewirePersianDatepickerServiceProvider extends ServiceProvider
