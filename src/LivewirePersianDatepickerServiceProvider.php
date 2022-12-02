@@ -1,9 +1,9 @@
 <?php
 
-namespace Alirahimi\Livewire\Persian\Datepicker;
+namespace AliRahimi\LivewirePersianDatepicker;
 
+use AliRahimi\LivewirePersianDatepicker\app\Console\PublishComponent;
 use Illuminate\Support\ServiceProvider;
-use PersianDatepicker\app\Console\PublishComponent;
 
 class LivewirePersianDatepickerServiceProvider extends ServiceProvider
 {

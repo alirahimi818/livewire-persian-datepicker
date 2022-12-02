@@ -5,7 +5,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "AliRahimi\\Livewire\\Persian\\Datepicker\\": "src"
+      "AliRahimi\\LivewirePersianDatepicker\\": "src"
     }
   },
   "authors": [
@@ -17,10 +17,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "AliRahimi\\Livewire\\Persian\\Datepicker\\LivewirePersianDatepickerServiceProvider"
+        "AliRahimi\\LivewirePersianDatepicker\\LivewirePersianDatepickerServiceProvider"
       ],
       "aliases": {
-        "PersianDatepicker": "AliRahimi\\Livewire\\Persian\\Datepicker"
+        "PersianDatepicker": "LivewirePersianDatepicker"
       }
     }
   },
