@@ -20,7 +20,7 @@
         "AliRahimi\\Livewire\\Persian\\Datepicker\\LivewirePersianDatepickerServiceProvider"
       ],
       "aliases": {
-        "PersianDatepicker": "AliRahimi\\Livewire\\Persian\\Datepicker\\"
+        "PersianDatepicker": "AliRahimi\\Livewire\\Persian\\Datepicker"
       }
     }
   },
