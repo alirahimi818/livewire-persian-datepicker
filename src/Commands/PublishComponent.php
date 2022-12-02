@@ -3,6 +3,7 @@
 namespace AliRahimi\LivewirePersianDatepicker\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class PublishComponent extends Command
 {
@@ -37,11 +38,14 @@ class PublishComponent extends Command
      */
     public function handle()
     {
+//        Artisan::call('vendor:publish --tag=livewire-persian-datepicker');
+
         $this->call('vendor:publish', [
+            '--provider' => "AliRahimi\LivewirePersianDatepicker\LivewirePersianDatepickerServiceProvider",
             '--tag' => 'livewire-persian-datepicker',
             '--force' => false]
         );
-//        $this->info("Livewire Persian Datepicker Component published successful. \n path => resources/views/components/persian-datepicker.blade.php");
+        $this->info("Livewire Persian Datepicker Component published successful. \n path => resources/views/components/persian-datepicker.blade.php");
 
     }
 }
