@@ -4,6 +4,7 @@ namespace AliRahimi\LivewirePersianDatepicker;
 
 use AliRahimi\LivewirePersianDatepicker\Commands\PublishComponent;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Artisan;
 
 class LivewirePersianDatepickerServiceProvider extends ServiceProvider
 {
@@ -33,5 +34,7 @@ class LivewirePersianDatepickerServiceProvider extends ServiceProvider
         $this->commands([
             PublishComponent::class,
         ]);
+
+        Artisan::call('lpd:persian-datepicker');
     }
 }
