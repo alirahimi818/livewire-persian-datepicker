@@ -45,7 +45,7 @@ class Tailwindcss
      */
     protected static function updateSass()
     {
-        copy(__DIR__.'/tailwindcss-stubs/app.scss', resource_path('sass/app.scss'));
+        copy(__DIR__.'/tailwindcss-stubs/app.css', resource_path('css/app.css'));
     }
 
     /**
