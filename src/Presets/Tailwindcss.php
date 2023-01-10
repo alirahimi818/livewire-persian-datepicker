@@ -3,6 +3,7 @@
 namespace AliRahimi\LivewirePersianDatepicker\Presets;
 
 use Illuminate\Support\Arr;
+use Illuminate\Filesystem\Filesystem;
 
 class Tailwindcss
 {
@@ -30,6 +31,7 @@ class Tailwindcss
     protected static function updatePackageArray(array $packages)
     {
         return array_merge([
+            'laravel-mix' => '^6.0.6',
             '@tailwindcss/forms' => '^0.5.0',
             '@tailwindcss/typography' => '^0.5.0',
             'tailwindcss' => '^3.0.0',
