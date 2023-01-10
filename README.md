@@ -23,24 +23,26 @@ composer require alirahimi/livewire-persian-datepicker
 ```
 If you have already installed npm, the command above will automatically add the required items to package.json and reinstall npm. Otherwise, you have to manually install the necessary packages mentioned above.
 
-After installing this package, a file called `persian-datepicker.blade.php` will be added to the `resources/views/components` folder and a file named `livewire-datepicker-datepicker.js` will be added to the `resources/js` folder of your project. 
+After installing this package, a file called ```persian-datepicker.blade.php``` will be added to the ```resources/views/components``` folder and a file named ```livewire-datepicker-datepicker.js``` will be added to the ```resources/js``` folder of your project. 
 If for any reason these two files are not created automatically, you can type the following command into the console:
 ```
 php artisan vendor:publish --provider="AliRahimi\LivewirePersianDatepicker\LivewirePersianDatepickerServiceProvider"
 ```
 
-Then you need to import the datepicker-datepicker.js file in app.js.
+Then you need to import the ```resources/js/datepicker-datepicker.js``` file in ```resources/js/app.js```.
 ```
 import './livewire-datepicker-datepicker';
 ```
 
 Now, if you are using webpack, enter the following command:
 ```
+npm install
 npm run dev
 ```
 
 And if you use vite, enter the following command:
 ```
+npm install
 vite run dev
 ```
 
