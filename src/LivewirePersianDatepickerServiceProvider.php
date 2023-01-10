@@ -5,7 +5,7 @@ namespace AliRahimi\LivewirePersianDatepicker;
 use AliRahimi\LivewirePersianDatepicker\Commands\PublishComponent;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Artisan;
-use AliRahimi\LivewirePersianDatepicker\Presets\Tailwindcss;
+use AliRahimi\LivewirePersianDatepicker\Presets\UpdateNpmPackage;
 
 class LivewirePersianDatepickerServiceProvider extends ServiceProvider
 {
@@ -36,11 +36,9 @@ class LivewirePersianDatepickerServiceProvider extends ServiceProvider
             PublishComponent::class,
         ]);
 
-        Tailwindcss::install();
-
+        UpdateNpmPackage::install();
 
         Artisan::call('livewire:persian-datepicker');
         exec('npm install');
-//        exec('npm run dev');
     }
 }

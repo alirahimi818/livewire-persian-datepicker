@@ -3,9 +3,8 @@
 namespace AliRahimi\LivewirePersianDatepicker\Presets;
 
 use Illuminate\Support\Arr;
-use Illuminate\Filesystem\Filesystem;
 
-class Tailwindcss
+class UpdateNpmPackage
 {
 
     /**
@@ -16,10 +15,6 @@ class Tailwindcss
     public static function install()
     {
         static::updatePackages();
-        static::updateWebpackConfiguration();
-        static::updateTailwindConfiguration();
-        static::updateSass();
-        static::updateBootstrapping();
     }
 
     /**
@@ -31,11 +26,11 @@ class Tailwindcss
     protected static function updatePackageArray(array $packages)
     {
         return array_merge([
-            'laravel-mix' => '^6.0.6',
             '@tailwindcss/forms' => '^0.5.0',
             '@tailwindcss/typography' => '^0.5.0',
             'tailwindcss' => '^3.0.0',
             'alpinejs' => '^3.0.6',
+            'jalali-moment' => '^3.3.11',
         ], Arr::except($packages, [
             'bootstrap',
             'popper.js',
@@ -65,51 +60,10 @@ class Tailwindcss
         );
 
         ksort($packages[$configurationKey]);
-
         file_put_contents(
             base_path('package.json'),
             json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL
         );
-    }
-
-    /**
-     * Update the Webpack configuration.
-     *
-     * @return void
-     */
-    protected static function updateWebpackConfiguration()
-    {
-        copy(__DIR__ . '/tailwindcss-stubs/webpack.mix.js', base_path('webpack.mix.js'));
-    }
-
-    /**
-     * Update the Tailwind configuration.
-     *
-     * @return void
-     */
-    protected static function updateTailwindConfiguration()
-    {
-        copy(__DIR__ . '/tailwindcss-stubs/tailwind.config.js', base_path('tailwind.config.js'));
-    }
-
-    /**
-     * Update the Sass files for the application.
-     *
-     * @return void
-     */
-    protected static function updateSass()
-    {
-        copy(__DIR__ . '/tailwindcss-stubs/app.css', resource_path('css/app.css'));
-    }
-
-    /**
-     * Update the bootstrapping files.
-     *
-     * @return void
-     */
-    protected static function updateBootstrapping()
-    {
-        copy(__DIR__ . '/tailwindcss-stubs/bootstrap.js', resource_path('js/bootstrap.js'));
     }
 
 }

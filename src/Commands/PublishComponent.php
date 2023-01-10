@@ -44,8 +44,6 @@ class PublishComponent extends Command
             '--force' => false]
         );
 
-//        exec('npm install');
-
         $this->info("Livewire Persian Datepicker Component published successful.\npath => resources/views/components/persian-datepicker.blade.php");
 
     }
