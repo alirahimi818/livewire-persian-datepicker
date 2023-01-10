@@ -6,7 +6,6 @@ This package is a Persian datepicker tool for Laravel.
 
 This tool is made as a component for Livewire, which requires the following requirements:
 
-
 ## Requirements
 
 - laravel +9.0
@@ -18,37 +17,88 @@ This tool is made as a component for Livewire, which requires the following requ
 ## Installation
 
 To install the package, run the following code in the path of your project
+
 ```
 composer require alirahimi/livewire-persian-datepicker 
 ```
-If you have already installed npm, the command above will automatically add the required items to package.json and reinstall npm. Otherwise, you have to manually install the necessary packages mentioned above.
 
-After installing this package, a file called ```persian-datepicker.blade.php``` will be added to the ```resources/views/components``` folder and a file named ```livewire-datepicker-datepicker.js``` will be added to the ```resources/js``` folder of your project. 
+If you have already installed npm, the command above will automatically add the required items to package.json and
+reinstall npm. Otherwise, you have to manually install the necessary packages mentioned above.
+
+After installing this package, a file called ```persian-datepicker.blade.php``` will be added to
+the ```resources/views/components``` folder and a file named ```livewire-datepicker-datepicker.js``` will be added to
+the ```resources/js``` folder of your project.
 If for any reason these two files are not created automatically, you can type the following command into the console:
+
 ```
 php artisan vendor:publish --provider="AliRahimi\LivewirePersianDatepicker\LivewirePersianDatepickerServiceProvider"
 ```
 
 Then you need to import the ```resources/js/datepicker-datepicker.js``` file in ```resources/js/app.js```.
+
 ```
 import './livewire-datepicker-datepicker';
 ```
 
+Finally, the ```resources/js/app.js``` file should look like this:
+
+```
+import './bootstrap';
+import './livewire-datepicker-datepicker';
+
+import Alpine from 'alpinejs';
+window.Alpine = Alpine;
+Alpine.start();
+```
+
+And the ```resources/css/app.css``` file should look like this:
+
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+<br /><br /><br />
 Now, if you are using webpack, enter the following command:
+
 ```
 npm install
 npm run dev
 ```
 
 And if you use vite, enter the following command:
+
 ```
 npm install
 vite run dev
 ```
 
+Tip: You need to call the created JavaScript and style files in your template:
+
+```
+<html>
+    <head>
+        .
+        .
+        .
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        @livewireStyles
+    </head>
+    <body>
+        .
+        .
+        .
+        <script src="{{ mix('js/app.js') }}" defer></script>
+        @livewireScripts
+    </body>
+</html>
+```
+
 ## How to use
 
 This component is easy to use. It has 5 entries that you can enter as you wish. I will give you an example below:
+
 ```
 <x-persian-datepicker label="Custom Label" wirePropertyName="component_persian_date_prpperty_name" showFormat="jYYYY/jMM/jDD" returnFormat="X" defaultDate="2023-01-10 21:30:00"/>
 ```
@@ -58,7 +108,6 @@ This component is easy to use. It has 5 entries that you can enter as you wish. 
 - showFormat: Date format for the selected date (Jalali date format-moment)
 - returnFormat: Date format that is sent to the server (X = timestamp)
 - defaultDate: Date picker default date
-
 
 ## Preview
 
