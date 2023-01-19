@@ -1,6 +1,6 @@
 import * as moment from 'jalali-moment';
 
-window.persianDatepicker = function (componentId, defaultDate = null, showFormat = null, returnFormat = null) {
+window.persianDatepicker = function (componentId, defaultDate = null, setNullInput = false, showFormat = null, returnFormat = null) {
     return {
         showDatepicker: false,
         showFormat: 'jYYYY/jMM/jDD',
@@ -28,7 +28,9 @@ window.persianDatepicker = function (componentId, defaultDate = null, showFormat
             }
             this.month = today.jMonth() + 1;
             this.year = today.jYear();
-            this.datepickerValue = moment(`${this.year}/${this.month}/${today.jDate()}`, 'jYYYY/jMM/jDD').format(this.showFormat);
+            if (!setNullInput) {
+                this.datepickerValue = moment(`${this.year}/${this.month}/${today.jDate()}`, 'jYYYY/jMM/jDD').format(this.showFormat);
+            }
             this.setReturnValue(this.year, this.month, today.jDate())
         },
 
@@ -81,6 +83,15 @@ window.persianDatepicker = function (componentId, defaultDate = null, showFormat
             let selectReturnInput = document.querySelector(`#${componentId} .dp-return-input`);
             if (selectReturnInput) {
                 selectReturnInput.value = moment(`${year}/${('0' + (month)).slice(-2)}/${('0' + day).slice(-2)}`, 'jYYYY/jMM/jDD').format(this.returnFormat);
+                selectReturnInput.dispatchEvent(new Event('input'));
+            }
+        },
+
+        removeDate() {
+            let selectReturnInput = document.querySelector(`#${componentId} .dp-return-input`);
+            if (selectReturnInput) {
+                this.datepickerValue = '';
+                selectReturnInput.value = '';
                 selectReturnInput.dispatchEvent(new Event('input'));
             }
         },
