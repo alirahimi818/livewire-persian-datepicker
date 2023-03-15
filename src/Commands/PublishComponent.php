@@ -39,9 +39,9 @@ class PublishComponent extends Command
     {
 
         $this->call('vendor:publish', [
-            '--provider' => "AliRahimi\LivewirePersianDatepicker\LivewirePersianDatepickerServiceProvider",
-            '--tag' => 'livewire-persian-datepicker',
-            '--force' => true]
+                '--provider' => "AliRahimi\LivewirePersianDatepicker\LivewirePersianDatepickerServiceProvider",
+                '--tag' => 'livewire-persian-datepicker',
+                '--force' => true]
         );
 
         $this->info("Livewire Persian Datepicker Component published successful.\npath => resources/views/components/persian-datepicker.blade.php");
