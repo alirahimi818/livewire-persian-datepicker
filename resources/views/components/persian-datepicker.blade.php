@@ -1,4 +1,4 @@
-@props(['defaultDate' => null, 'setNullInput' => false, 'withTime' => false, 'withTimeSecond' => true, 'label'=> null, 'required'=> false, 'showFormat' => null, 'returnFormat' => null, 'wirePropertyName' => null, 'uniqueId' => 'dp-'. uniqid()])
+@props(['defaultDate' => null, 'setNullInput' => false, 'withTime' => false, 'withTimeSeconds' => true, 'label'=> null, 'required'=> false, 'showFormat' => null, 'returnFormat' => null, 'wirePropertyName' => null, 'uniqueId' => 'dp-'. uniqid()])
 <div class="w-full" dir="rtl" wire:ignore>
     <div class="relative"
          x-data="persianDatepicker('{{ $uniqueId  }}','{{ $defaultDate  }}','{{ $setNullInput  }}','{{ $withTime  }}','{{ $showFormat }}','{{ $returnFormat }}')"
@@ -93,7 +93,7 @@
                         <div
                                 @click="selectDay(date);isSelectedDay(date,$event.target)"
                                 x-text="date"
-                                class="cursor-pointer text-center text-sm rounded-full leading-loose transition ease-in-out duration-100"
+                                class="cursor-pointer w-6 h-6 flex flex-wrap items-center justify-center text-center text-sm rounded-full leading-loose transition ease-in-out duration-100"
                                 :class="{'todayItem bg-blue-500 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false, 'datepickerItemSelected bg-emerald-700 text-white': isSelectedDay(date) == true}"
                         ></div>
                     </div>
@@ -122,7 +122,7 @@
                        class="number_format block w-full text-center border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-200 focus:ring-opacity-50 rounded-md shadow-sm h-11"/>
                 <span class="absolute top-0.5 right-1 text-xxs text-gray-400">دقیقه</span>
             </div>
-            @if($withTimeSecond)
+            @if($withTimeSeconds)
                 <span>:</span>
                 <div class="w-full relative">
                     <input type="number" min="0" max="59" maxlength="2" x-model="second"

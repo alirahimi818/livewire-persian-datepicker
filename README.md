@@ -116,7 +116,7 @@ This component is easy to use. It has 9 entries that you can enter as you wish. 
     :defaultDate="date('Y-m-d H:i:s')"
     :setNullInput="true"
     :withTime="true"
-    :withTimeSecond="true"/>
+    :withTimeSeconds="true"/>
 ```
 
 component property description:
@@ -131,7 +131,7 @@ component property description:
 |   defaultDate    |    No    |     null      |                  Datepicker default date (null = current date)                  |
 |   setNullInput   |    No    |     false     |                     Can set the default Datepicker to null                      |
 |     withTime     |    No    |     false     |             Can enable Datepicker time inputs (Hour Minute Second)              |
-|  withTimeSecond  |    No    |     true      |                      Can disable Datepicker seconds input                       |
+| withTimeSeconds  |    No    |     true      |                      Can disable Datepicker seconds input                       |
 
 ## Preview
 
