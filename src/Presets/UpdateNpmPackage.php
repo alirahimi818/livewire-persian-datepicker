@@ -31,6 +31,7 @@ class UpdateNpmPackage
             'tailwindcss' => '^3.0.0',
             'alpinejs' => '^3.0.6',
             'jalali-moment' => '^3.3.11',
+            'moment-timezone' => '^0.5.40',
         ], Arr::except($packages, [
             'bootstrap',
             'popper.js',
