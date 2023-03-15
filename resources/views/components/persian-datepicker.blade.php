@@ -1,24 +1,24 @@
-@props(['defaultDate' => null, 'setNullInput' => false, 'label'=> null, 'required'=> false, 'showFormat' => null, 'returnFormat' => null, 'wirePropertyName' => null, 'uniqueId' => 'dp-'. uniqid()])
+@props(['defaultDate' => null, 'setNullInput' => false, 'withTime' => false, 'withTimeSecond' => true, 'label'=> null, 'required'=> false, 'showFormat' => null, 'returnFormat' => null, 'wirePropertyName' => null, 'uniqueId' => 'dp-'. uniqid()])
 <div class="w-full" dir="rtl" wire:ignore>
     <div class="relative"
-         x-data="persianDatepicker('{{ $uniqueId  }}','{{ $defaultDate  }}','{{ $setNullInput  }}','{{ $showFormat }}','{{ $returnFormat }}')"
+         x-data="persianDatepicker('{{ $uniqueId  }}','{{ $defaultDate  }}','{{ $setNullInput  }}','{{ $withTime  }}','{{ $showFormat }}','{{ $returnFormat }}')"
          x-init="[initDate(), getNoOfDays()]" id="{{$uniqueId}}"
          x-cloak>
-        <div class="relative">
+        <div class="relative pdp-input-area">
             <input type="text" name="datepickerDate" class="dp-return-input hidden"
-                   @input="$wire.set('{{$wirePropertyName}}', $event.target.value)">
+                   @input="$wire.set('{{$wirePropertyName}}', (!$event.target.value ? null : $event.target.value) )">
             @if($label)
                 <label class="block font-medium text-sm text-gray-700">
-                    {{ $label }} {!! $required ? '<span class="text-red-600 text-xl relative top-1.5 leading-none">*</span>' : ''!!}
+                    {!! $label !!} {!! $required ? '<span class="text-red-600 text-xl relative top-1.5 leading-none">*</span>' : ''!!}
                 </label>
             @endif
             <div class="relative flex items-center mt-1">
                 <input @click="showDatepicker = !showDatepicker"
-                       class="border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-200 focus:ring-opacity-50 rounded-md shadow-sm block w-full pl-14 text-sm"
+                       class="auto-go-to-next pdp-input border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-200 focus:ring-opacity-50 rounded-md shadow-sm block w-full pl-14 text-sm h-11"
                        type="text" readonly
                        x-model="datepickerValue"
                        @keydown.escape="showDatepicker = false"
-                       placeholder="{{ $label }}" {{ $attributes }}>
+                       placeholder="{{ strip_tags($label) }}" {{ $attributes }}>
 
                 <div class="absolute left-0 pl-3" @click="showDatepicker = !showDatepicker">
                     <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -27,12 +27,17 @@
                     </svg>
                 </div>
                 <span x-show="datepickerValue"
-                      class="material-icons cursor-pointer absolute left-9 text-red-500 remove_date"
-                      @click="removeDate(); showDatepicker = false">close</span>
+                      class="material-icons cursor-pointer absolute left-9 remove_date"
+                      @click="removeDate(); showDatepicker = false">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24"><path
+                                    d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z"
+                                    fill="#ef4444"></path>
+                        </svg>
+                </span>
             </div>
         </div>
         <div
-                class="bg-white {{ $label ? '' : '' }} z-40 rounded-lg shadow p-4 absolute left-0"
+                class="bg-white z-40 rounded-lg shadow p-4 absolute left-0"
                 style="width: 17rem"
                 x-show.transition="showDatepicker"
                 @click.away="showDatepicker = false">
@@ -88,7 +93,7 @@
                         <div
                                 @click="selectDay(date);isSelectedDay(date,$event.target)"
                                 x-text="date"
-                                class="cursor-pointer text-center text-sm leading-none rounded-full leading-loose transition ease-in-out duration-100"
+                                class="cursor-pointer text-center text-sm rounded-full leading-loose transition ease-in-out duration-100"
                                 :class="{'todayItem bg-blue-500 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false, 'datepickerItemSelected bg-emerald-700 text-white': isSelectedDay(date) == true}"
                         ></div>
                     </div>
@@ -102,5 +107,31 @@
                 </button>
             </div>
         </div>
+        <div class="relative pdp-time-area mt-2 flex flex-row-reverse items-center gap-1" x-show="datepickerValue && withTime"
+             x-transition>
+            <div class="w-full relative">
+                <input type="number" min="0" max="23" maxlength="2" x-model="hour"
+                       @input="setTime('hour',$event.target)"
+                       class="number_format block w-full text-center border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-200 focus:ring-opacity-50 rounded-md shadow-sm h-11"/>
+                <span class="absolute top-0.5 right-1 text-xxs text-gray-400">ساعت</span>
+            </div>
+            <span>:</span>
+            <div class="w-full relative">
+                <input type="number" min="0" max="59" maxlength="2" x-model="minute"
+                       @input="setTime('minute',$event.target)"
+                       class="number_format block w-full text-center border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-200 focus:ring-opacity-50 rounded-md shadow-sm h-11"/>
+                <span class="absolute top-0.5 right-1 text-xxs text-gray-400">دقیقه</span>
+            </div>
+            @if($withTimeSecond)
+                <span>:</span>
+                <div class="w-full relative">
+                    <input type="number" min="0" max="59" maxlength="2" x-model="second"
+                           @input="setTime('second',$event.target)"
+                           class="number_format block w-full text-center border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-200 focus:ring-opacity-50 rounded-md shadow-sm h-11"/>
+                    <span class="absolute top-0.5 right-1 text-xxs text-gray-400">ثانیه</span>
+                </div>
+            @endif
+        </div>
+
     </div>
 </div>

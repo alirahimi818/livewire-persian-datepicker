@@ -1,21 +1,29 @@
 import * as moment from 'jalali-moment';
+import * as moment_timezone from 'moment-timezone';
 
-window.persianDatepicker = function (componentId, defaultDate = null, setNullInput = false, showFormat = null, returnFormat = null) {
+moment_timezone.tz.setDefault("Asia/Tehran");
+window.persianDatepicker = function (componentId, defaultDate = null, setNullInput = false, withTime = false, showFormat = null, returnFormat = null) {
     return {
         showDatepicker: false,
+        withTime: false,
         showFormat: 'jYYYY/jMM/jDD',
         returnFormat: 'X',
         defaultDate: '',
         datepickerValue: '',
         selectedItemElement: 'datepickerItemSelected',
-        month: '',
         year: '',
+        month: '',
+        day: '',
+        hour: '',
+        minute: '',
+        second: '',
         no_of_days: [],
         blankDays: [],
         monthNames: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
         days: ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'],
 
         initDate() {
+            this.withTime = withTime;
             this.showFormat = showFormat ? showFormat : this.showFormat;
             this.returnFormat = returnFormat ? returnFormat : this.returnFormat;
             this.defaultDate = defaultDate ? defaultDate : this.defaultDate;
@@ -26,12 +34,18 @@ window.persianDatepicker = function (componentId, defaultDate = null, setNullInp
             } else {
                 today = moment().locale('fa');
             }
-            this.month = today.jMonth() + 1;
+
             this.year = today.jYear();
+            this.month = ('0' + (today.jMonth() + 1)).slice(-2);
+            this.day = ('0' + today.jDate()).slice(-2);
+            this.hour = ('0' + today.hour()).slice(-2);
+            this.minute = ('0' + today.minute()).slice(-2);
+            this.second = ('0' + today.second()).slice(-2);
+
             if (!setNullInput) {
-                this.datepickerValue = moment(`${this.year}/${this.month}/${today.jDate()}`, 'jYYYY/jMM/jDD').format(this.showFormat);
+                this.datepickerValue = moment(`${this.year}/${this.month}/${this.day} ${this.hour}:${this.minute}:${this.second}`, 'jYYYY/jMM/jDD HH:mm:ss').format(this.showFormat);
             }
-            this.setReturnValue(this.year, this.month, today.jDate())
+            this.setReturnValue(this.year, this.month, this.day, this.hour, this.minute, this.second)
         },
 
         isToday(date) {
@@ -41,7 +55,9 @@ window.persianDatepicker = function (componentId, defaultDate = null, setNullInp
         },
 
         goToToday() {
-            this.initDate()
+            let today = moment().locale('fa');
+            this.year = today.jYear();
+            this.month = ('0' + (today.jMonth() + 1)).slice(-2);
             this.getNoOfDays();
             this.removeSelected(document.querySelectorAll(`#${componentId} .${this.selectedItemElement}`));
         },
@@ -66,27 +82,58 @@ window.persianDatepicker = function (componentId, defaultDate = null, setNullInp
             }
             const selected = moment(`${this.year}/${this.month}/${date}`, 'jYYYY/jMM/jDD');
             let selectReturnInput = document.querySelector(`#${componentId} .dp-return-input`);
-            if (selectReturnInput) {
-                return selectReturnInput.value === selected.format(this.returnFormat);
+            if (selectReturnInput && selectReturnInput.value) {
+                const returnInput = moment(selectReturnInput.value, this.returnFormat);
+                const returnInputDay = moment(`${returnInput.jYear()}/${returnInput.jMonth() + 1}/${returnInput.jDate()}`, 'jYYYY/jMM/jDD');
+                return returnInputDay.format(this.returnFormat) === selected.format(this.returnFormat);
             }
             return false;
         },
 
         selectDay(date) {
-            let selectedDate = moment(`${this.year}/${this.month}/${date}`, 'jYYYY/jMM/jDD');
+            this.day = date;
+            let selectedDate = moment(`${this.year}/${this.month}/${date} ${this.hour}:${this.minute}:${this.second}`, 'jYYYY/jMM/jDD HH:mm:ss');
             this.datepickerValue = selectedDate.format(this.showFormat);
             this.showDatepicker = false;
-            this.setReturnValue(selectedDate.jYear(), selectedDate.jMonth() + 1, selectedDate.jDate())
+            this.setReturnValue(selectedDate.jYear(), selectedDate.jMonth() + 1, selectedDate.jDate(), selectedDate.hour(), selectedDate.minute(), selectedDate.second())
         },
 
-        setReturnValue(year, month, day) {
+        setReturnValue(year, month, day, hour, minute, second) {
             let selectReturnInput = document.querySelector(`#${componentId} .dp-return-input`);
             if (selectReturnInput) {
-                selectReturnInput.value = moment(`${year}/${('0' + (month)).slice(-2)}/${('0' + day).slice(-2)}`, 'jYYYY/jMM/jDD').format(this.returnFormat);
+                if (this.withTime) {
+                    selectReturnInput.value = moment(`${year}/${('0' + (month)).slice(-2)}/${('0' + day).slice(-2)} ${('0' + hour).slice(-2)}:${('0' + minute).slice(-2)}:${('0' + second).slice(-2)}`, 'jYYYY/jMM/jDD HH:mm:ss').format(this.returnFormat);
+                } else {
+                    selectReturnInput.value = moment(`${year}/${('0' + (month)).slice(-2)}/${('0' + day).slice(-2)}`, 'jYYYY/jMM/jDD HH:mm:ss').format(this.returnFormat);
+                }
                 selectReturnInput.dispatchEvent(new Event('input'));
             }
         },
-
+        setTime(type, element) {
+            if (Number(element.value) >= 0) {
+                let value = Number(('0' + (element.value)).slice(-2))
+                if (value >= 0) {
+                    if (type === 'hour') {
+                        if (value > 23) {
+                            value = element.value = 23;
+                        }
+                        this.hour = value;
+                    } else if (type === 'minute') {
+                        if (value > 59) {
+                            value = element.value = 59;
+                        }
+                        this.minute = value;
+                    } else if (type === 'second') {
+                        if (value > 59) {
+                            value = element.value = 59;
+                        }
+                        this.second = value;
+                    }
+                    this.datepickerValue = moment(`${this.year}/${this.month}/${this.day} ${this.hour}:${this.minute}:${this.second}`, 'jYYYY/jMM/jDD HH:mm:ss').format(this.showFormat);
+                    this.setReturnValue(this.year, this.month, this.day, this.hour, this.minute, this.second)
+                }
+            }
+        },
         removeDate() {
             let selectReturnInput = document.querySelector(`#${componentId} .dp-return-input`);
             if (selectReturnInput) {
