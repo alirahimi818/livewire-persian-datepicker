@@ -22,6 +22,13 @@ To install the package, run the following code in the path of your project
 composer require alirahimi/livewire-persian-datepicker 
 ```
 
+After installing with Composer, you need to publish the project files and install the npm requirements. With the
+following command, the mentioned tasks will be done automatically.
+
+```
+php artisan livewire:persian-datepicker
+```
+
 If you have already installed npm, the command above will automatically add the required items to package.json and
 reinstall npm. Otherwise, you have to manually install the necessary packages mentioned above.
 
@@ -31,7 +38,7 @@ the ```resources/js``` folder of your project.
 If for any reason these two files are not created automatically, you can type the following command into the console:
 
 ```
-php artisan vendor:publish --provider="AliRahimi\LivewirePersianDatepicker\LivewirePersianDatepickerServiceProvider"
+php artisan vendor:publish --provider="AliRahimi\LivewirePersianDatepicker\LivewirePersianDatepickerServiceProvider" --tag="livewire-persian-datepicker" --force
 ```
 
 Then you need to import the ```resources/js/datepicker-datepicker.js``` file in ```resources/js/app.js```.
@@ -97,17 +104,34 @@ Tip: You need to call the created JavaScript and style files in your template:
 
 ## How to use
 
-This component is easy to use. It has 5 entries that you can enter as you wish. I will give you an example below:
+This component is easy to use. It has 9 entries that you can enter as you wish. I will give you an example below:
 
 ```
-<x-persian-datepicker label="Custom Label" wirePropertyName="component_persian_date_prpperty_name" showFormat="jYYYY/jMM/jDD" returnFormat="X" defaultDate="2023-01-10 21:30:00"/>
+<x-persian-datepicker 
+    wirePropertyName="livewire-component.property"
+    label="Custom Label"
+    showFormat="jYYYY/jMM/jDD"
+    returnFormat="X"
+    :required="true"
+    :defaultDate="date('Y-m-d H:i:s')"
+    :setNullInput="true"
+    :withTime="true"
+    :withTimeSecond="true"/>
 ```
 
-- label: input label
-- wirePropertyName: The livewire property to which the information is sent after selecting the date
-- showFormat: Date format for the selected date (Jalali date format-moment)
-- returnFormat: Date format that is sent to the server (X = timestamp)
-- defaultDate: Date picker default date
+component property description:
+
+|     Property     | Required |    Default    |                                   Description                                   |
+|:----------------:|:--------:|:-------------:|:-------------------------------------------------------------------------------:|
+| wirePropertyName |   Yes    |     null      | The livewire property to which the information is sent after selecting the date |
+|      label       |    No    |     null      |                                   input label                                   |
+|    showFormat    |    No    | jYYYY/jMM/jDD |     Date format for the selected date (Jalali date format => jalali-moment)     |
+|   returnFormat   |    No    |       X       |             Date format that is sent to the server (X = timestamp)              |
+|     required     |    No    |     false     |                            Add red Star after label                             |
+|   defaultDate    |    No    |     null      |                  Datepicker default date (null = current date)                  |
+|   setNullInput   |    No    |     false     |                     Can set the default Datepicker to null                      |
+|     withTime     |    No    |     false     |             Can enable Datepicker time inputs (Hour Minute Second)              |
+|  withTimeSecond  |    No    |     true      |                      Can disable Datepicker seconds input                       |
 
 ## Preview
 

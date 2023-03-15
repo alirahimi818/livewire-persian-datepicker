@@ -2,6 +2,7 @@
 
 namespace AliRahimi\LivewirePersianDatepicker\Commands;
 
+use AliRahimi\LivewirePersianDatepicker\Presets\UpdateNpmPackage;
 use Illuminate\Console\Command;
 
 class PublishComponent extends Command
@@ -38,11 +39,15 @@ class PublishComponent extends Command
     public function handle()
     {
 
+        UpdateNpmPackage::install();
+
         $this->call('vendor:publish', [
                 '--provider' => "AliRahimi\LivewirePersianDatepicker\LivewirePersianDatepickerServiceProvider",
                 '--tag' => 'livewire-persian-datepicker',
                 '--force' => true]
         );
+
+        exec('npm install');
 
         $this->info("Livewire Persian Datepicker Component published successful.\npath => resources/views/components/persian-datepicker.blade.php");
 

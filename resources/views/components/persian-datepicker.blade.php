@@ -102,7 +102,7 @@
 
             <div class="flex mt-1">
                 <button type="button" @click="goToToday()"
-                        class="inline-flex items-center w-full justify-center px-4 py-2 bg-sky-500/100 text-white shadow-md border border-transparent rounded-lg text-xs text-white uppercase focus:outline-none disabled:opacity-25 transition">
+                        class="inline-flex items-center w-full justify-center px-4 py-2 !bg-sky-500 text-white shadow-md border border-transparent rounded-lg text-xs text-white uppercase focus:outline-none disabled:opacity-25 transition">
                     امروز
                 </button>
             </div>
