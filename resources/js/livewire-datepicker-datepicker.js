@@ -1,5 +1,5 @@
-import * as moment from 'jalali-moment';
-import * as moment_timezone from 'moment-timezone';
+import moment from 'jalali-moment';
+import moment_timezone from 'moment-timezone';
 
 moment_timezone.tz.setDefault("Asia/Tehran");
 window.persianDatepicker = function (componentId, defaultDate = null, setNullInput = false, withTime = false, showFormat = null, returnFormat = null) {

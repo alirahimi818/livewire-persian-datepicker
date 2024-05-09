@@ -1,5 +1,5 @@
-@props(['defaultDate' => null, 'setNullInput' => false, 'withTime' => false, 'withTimeSeconds' => true, 'label'=> null, 'required'=> false, 'showFormat' => null, 'returnFormat' => null, 'wirePropertyName' => null, 'uniqueId' => 'dp-'. uniqid()])
-<div class="w-full" dir="rtl" wire:ignore>
+@props(['defaultDate' => null, 'setNullInput' => false, 'withTime' => false, 'withTimeSeconds' => true, 'ignoreWire' => true, 'label'=> null, 'required'=> false, 'showFormat' => null, 'returnFormat' => null, 'wirePropertyName' => null, 'uniqueId' => 'dp-'. uniqid()])
+<div class="w-full persian-datepicker" dir="rtl" {{ $ignoreWire ? 'wire:ignore' : '' }}>
     <div class="relative"
          x-data="persianDatepicker('{{ $uniqueId  }}','{{ $defaultDate  }}','{{ $setNullInput  }}','{{ $withTime  }}','{{ $showFormat }}','{{ $returnFormat }}')"
          x-init="[initDate(), getNoOfDays()]" id="{{$uniqueId}}"
