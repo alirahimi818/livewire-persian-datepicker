@@ -1,7 +1,22 @@
-@props(['defaultDate' => null, 'setNullInput' => false, 'withTime' => false, 'withTimeSeconds' => true, 'ignoreWire' => true, 'label'=> null, 'required'=> false, 'showFormat' => null, 'returnFormat' => null, 'wirePropertyName' => null, 'uniqueId' => 'dp-'. uniqid()])
+@props([
+    'defaultDate' => null,
+    'minDate' => null,
+    'maxDate' => null,
+    'setNullInput' => false,
+    'withTime' => false,
+    'withTimeSeconds' => true,
+    'ignoreWire' => true,
+    'label'=> null,
+    'required'=> false,
+    'showFormat' => null,
+    'returnFormat' => null,
+    'wirePropertyName' => null,
+    'currentView' => 'day',
+    'uniqueId' => 'dp-'. uniqid()
+    ])
 <div class="w-full persian-datepicker" dir="rtl" {{ $ignoreWire ? 'wire:ignore' : '' }}>
     <div class="relative"
-         x-data="persianDatepicker('{{ $uniqueId  }}','{{ $defaultDate  }}','{{ $setNullInput  }}','{{ $withTime  }}','{{ $showFormat }}','{{ $returnFormat }}')"
+         x-data="persianDatepicker('{{ $uniqueId  }}','{{ $defaultDate  }}','{{ $setNullInput  }}','{{ $withTime  }}','{{ $showFormat }}','{{ $returnFormat }}','{{ $currentView }}','{{ $minDate }}','{{ $maxDate }}')"
          x-init="[initDate(), getNoOfDays()]" id="{{$uniqueId}}"
          x-cloak>
         <div class="relative pdp-input-area">
@@ -44,8 +59,8 @@
 
             <div class="flex justify-between items-center mb-2">
                 <div>
-                    <span x-text="monthNames[month - 1]" class="text-lg font-bold text-gray-800"></span>
-                    <span x-text="year" class="ml-1 text-lg text-gray-600 font-normal"></span>
+                    <span x-text="monthNames[month - 1]" @click="currentView = 'month'" class="text-lg font-bold text-gray-800 cursor-pointer"></span>
+                    <span x-text="year" @click="currentView = 'year'" class="ml-1 text-lg text-gray-600 font-normal cursor-pointer"></span>
                 </div>
                 <div>
                     <button
@@ -71,38 +86,67 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap mb-3 -mx-1">
-                <template x-for="(day, index) in days" :key="index">
-                    <div style="width: 14.26%" class="px-1">
-                        <div
-                                x-text="day"
-                                class="text-gray-800 font-medium text-center text-xs"></div>
-                    </div>
-                </template>
-            </div>
+            <div class="flex flex-col" x-show="currentView == 'day'" x-transition>
+                <div class="flex flex-wrap mb-3 -mx-1">
+                    <template x-for="(day, index) in days" :key="index">
+                        <div style="width: 14.26%" class="px-1">
+                            <div
+                                    x-text="day"
+                                    class="text-gray-800 font-medium text-center text-xs"></div>
+                        </div>
+                    </template>
+                </div>
 
-            <div class="flex flex-wrap -mx-1">
-                <template x-for="blankDay in blankDays">
-                    <div
-                            style="width: 14.28%"
-                            class="text-center border p-1 border-transparent text-sm"
-                    ></div>
-                </template>
-                <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">
-                    <div style="width: 14.28%" class="px-1 mb-1">
+                <div class="flex flex-wrap -mx-1">
+                    <template x-for="blankDay in blankDays">
                         <div
-                                @click="selectDay(date);isSelectedDay(date,$event.target)"
-                                x-text="date"
-                                class="cursor-pointer w-6 h-6 flex flex-wrap items-center justify-center text-center text-sm rounded-full leading-loose transition ease-in-out duration-100"
-                                :class="{'todayItem bg-blue-500 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false, 'datepickerItemSelected bg-emerald-700 text-white': isSelectedDay(date) == true}"
+                                style="width: 14.28%"
+                                class="text-center border p-1 border-transparent text-sm"
                         ></div>
-                    </div>
-                </template>
+                    </template>
+                    <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">
+                        <div style="width: 14.28%" class="px-1 mb-1">
+                            <div
+                                    @click="if(date.isActive) { selectDay(date.day); isSelectedDay(date.day,$event.target)}"
+                                    x-text="date.day"
+                                    class="cursor-pointer w-6 h-6 flex flex-wrap items-center justify-center text-center text-sm rounded-full leading-loose transition ease-in-out duration-100"
+                                    :class="{'todayItem bg-blue-500 text-white': isToday(date.day) == true, 'text-gray-700 hover:bg-blue-200': isToday(date.day) == false, 'datepickerItemSelected bg-emerald-700 text-white': isSelectedDay(date.day) == true}"
+                                    x-bind:style="date.isActive === false && { color: '#ccc' }"
+                            ></div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div class="flex flex-col" x-show="currentView == 'month'" x-transition>
+                <div class="flex flex-wrap justify-between gap-2 p-2">
+                    <template x-for="(monthItem, monthIndex) in monthRanges" :key="monthIndex">
+                        <div
+                                @click="monthItem.isActive ? selectMonth(monthItem.month) : null"
+                                x-text="monthItem.name"
+                                class="cursor-pointer flex flex-wrap w-16 items-center justify-center text-center text-sm leading-loose transition ease-in-out duration-100"
+                                :class="{'monthItem bg-blue-500 text-white': isThisMonth(monthItem.month) == true, 'text-gray-700 hover:bg-blue-200': isThisMonth(monthItem.month) == false}"
+                                x-bind:style="monthItem.isActive === false && { color: '#ccc' }"
+                        ></div>
+                    </template>
+                </div>
+            </div>
+            <div class="flex flex-col" x-show="currentView == 'year'" x-transition>
+                <div class="flex flex-wrap justify-between gap-2 p-2 h-44 overflow-y-auto">
+                    <template x-for="(yearItem, yearIndex) in yearRanges" :key="yearIndex">
+                        <div
+                                @click="yearItem.isActive ? selectYear(yearItem.year) : null"
+                                x-text="yearItem.year"
+                                class="cursor-pointer flex flex-wrap w-16 items-center justify-center text-center text-sm leading-loose transition ease-in-out duration-100"
+                                :class="{'yearItem bg-blue-500 text-white': isThisYear(yearItem.year) == true, 'text-gray-700 hover:bg-blue-200': isThisYear(yearItem.year) == false}"
+                                x-bind:style="yearItem.isActive === false && { color: '#ccc' }"
+                        ></div>
+                    </template>
+                </div>
             </div>
 
             <div class="flex mt-1">
                 <button type="button" @click="goToToday()"
-                        class="inline-flex items-center w-full justify-center px-4 py-2 !bg-sky-500 text-white shadow-md border border-transparent rounded-lg text-xs text-white uppercase focus:outline-none disabled:opacity-25 transition">
+                        class="inline-flex items-center w-full justify-center px-4 py-2 !bg-sky-500 text-white shadow-md border border-transparent rounded-lg text-xs text-white focus:outline-none disabled:opacity-25 transition">
                     امروز
                 </button>
             </div>

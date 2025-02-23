@@ -122,18 +122,21 @@ This component is easy to use. It has 9 entries that you can enter as you wish. 
 
 component property description:
 
-|     Property      | Required |    Default    |                                   Description                                   |
-|:-----------------:|:--------:|:-------------:|:-------------------------------------------------------------------------------:|
-| wirePropertyName  |   Yes    |     null      | The livewire property to which the information is sent after selecting the date |
-|       label       |    No    |     null      |                                   input label                                   |
-|    showFormat     |    No    | jYYYY/jMM/jDD |     Date format for the selected date (Jalali date format => jalali-moment)     |
-|   returnFormat    |    No    |       X       |             Date format that is sent to the server (X = timestamp)              |
-|     required      |    No    |     false     |                            Add red Star after label                             |
-|    defaultDate    |    No    |     null      |                  Datepicker default date (null = current date)                  |
-|   setNullInput    |    No    |     false     |                     Can set the default Datepicker to null                      |
-|    ignoreWire     |    No    |     true      |               Ignores livewire changes (recommended for time use)               |
-|     withTime      |    No    |     false     |             Can enable Datepicker time inputs (Hour Minute Second)              |
-|  withTimeSeconds  |    No    |     true      |                      Can disable Datepicker seconds input                       |
+|     Property     | Required |    Default    |                                   Description                                   |
+|:----------------:|:--------:|:-------------:|:-------------------------------------------------------------------------------:|
+| wirePropertyName |   Yes    |     null      | The livewire property to which the information is sent after selecting the date |
+|      label       |    No    |     null      |                                   input label                                   |
+|   currentView    |    No    |      day      |                   Default Datepicker view (day, month, year).                   |
+|    showFormat    |    No    | jYYYY/jMM/jDD |     Date format for the selected date (Jalali date format => jalali-moment)     |
+|   returnFormat   |    No    |       X       |             Date format that is sent to the server (X = timestamp)              |
+|     required     |    No    |     false     |                            Add red Star after label                             |
+|   defaultDate    |    No    |     null      |                  Datepicker default date (null = current date)                  |
+|     minDate      |    No    |     null      |                   Datepicker min date (null = without limit)                    |
+|     maxDate      |    No    |     null      |                   Datepicker max date (null = without limit)                    |
+|   setNullInput   |    No    |     false     |                     Can set the default Datepicker to null                      |
+|    ignoreWire    |    No    |     true      |               Ignores livewire changes (recommended for time use)               |
+|     withTime     |    No    |     false     |             Can enable Datepicker time inputs (Hour Minute Second)              |
+| withTimeSeconds  |    No    |     true      |                      Can disable Datepicker seconds input                       |
 
 ## Preview
 
